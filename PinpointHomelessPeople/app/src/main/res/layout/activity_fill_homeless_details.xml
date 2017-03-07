@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_fill_homeless_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.fourthstatelab.pinpointhomelesspeople.Fill_homeless_details">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:id="@+id/name"
+        android:layout_height="50dp"
+        android:hint="Tentative Name"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:text="Help us by giving a few details about the person:-"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textView"
+        android:textSize="18sp"
+        android:textStyle="normal|bold" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_below="@+id/name"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/gender"
+        android:layout_marginBottom="10dp"
+        android:hint="Gender" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:layout_below="@+id/gender"
+        android:id="@+id/age"
+        android:hint="Approximate Age"
+        android:layout_marginBottom="10dp"
+        android:inputType="number" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_below="@+id/age"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/other"
+        android:layout_marginBottom="10dp"
+        android:hint="Other Details" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:clickable="true"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_menu_camera"
+        android:layout_below="@+id/other"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="22dp"
+        android:layout_marginTop="30dp"
+        android:id="@+id/image"
+        app:backgroundTint="#e06513"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/image"
+        android:layout_toStartOf="@+id/image"
+        android:layout_marginEnd="18dp"
+        android:id="@+id/photo" />
+
+    <Button
+        android:text="Done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/done"
+        android:layout_below="@+id/photo"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

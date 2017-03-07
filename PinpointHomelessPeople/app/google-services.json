@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "948671032409",
+    "firebase_url": "https://pinpointhomelesspeople.firebaseio.com",
+    "project_id": "pinpointhomelesspeople",
+    "storage_bucket": "pinpointhomelesspeople.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948671032409:android:a34a29a10c140ebf",
+        "android_client_info": {
+          "package_name": "com.fourthstatelab.pinpointhomelesspeople"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948671032409-vtkbc8lddnraqcdl6f6ko4c5am99jcqt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fourthstatelab.pinpointhomelesspeople",
+            "certificate_hash": "b73b8c1665ae35773af05dcc597767025afd01eb"
+          }
+        },
+        {
+          "client_id": "948671032409-e3sh5hohrlth1ufd9psqa9abik1s4dr5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWVMTd27zwWxulZ-54gyfqKbzKe0ZWYog"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948671032409-e3sh5hohrlth1ufd9psqa9abik1s4dr5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
