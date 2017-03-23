@@ -74,3 +74,68 @@ class Homeless_list extends BaseAdapter{
         notifyDataSetChanged();
     }
 }
+
+
+
+class Food_Distribution_list extends BaseAdapter
+{
+    List<FoodDistribution> foodlist;
+    LayoutInflater layoutInflater;
+    Context context;
+
+    Food_Distribution_list(List<FoodDistribution> food_dis,Context con)
+    {
+        foodlist=food_dis;
+        context=con;
+        layoutInflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    @Override
+    public int getCount() {
+        return foodlist.size();
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return foodlist.get(i);
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
+
+    class Holder
+    {
+        TextView name;
+        TextView quantity;
+        TextView phone;
+        TextView address;
+        TextView type;
+    }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+       View myview= layoutInflater.inflate(R.layout.food_dist_listview,null);
+        Holder holder=new Holder();
+        holder.name= (TextView) myview.findViewById(R.id.name);
+        holder.address=(TextView)myview.findViewById(R.id.address);
+        holder.phone=(TextView)myview.findViewById(R.id.ph_no);
+        holder.quantity=(TextView)myview.findViewById(R.id.quantity);
+        holder.type=(TextView)myview.findViewById(R.id.mytype);
+
+        holder.name.setText(foodlist.get(i).name_of_provider);
+        holder.quantity.setText(foodlist.get(i).quantity+"");
+        holder.address.setText(foodlist.get(i).address);
+        holder.phone.setText(foodlist.get(i).phone_number);
+        holder.type.setText(foodlist.get(i).veg_nonveg+"");
+
+        return myview;
+    }
+
+    public void notify_myfunc(List<FoodDistribution> flist)
+    {
+        foodlist=flist;
+        notifyDataSetChanged();
+    }
+}

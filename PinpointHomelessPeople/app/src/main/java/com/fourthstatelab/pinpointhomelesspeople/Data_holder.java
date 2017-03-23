@@ -44,5 +44,6 @@ class FoodDistribution
     public String phone_number;
     public String address;
     public int veg_nonveg;
+    public Location_Data loc_data;
 
 }

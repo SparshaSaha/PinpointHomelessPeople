@@ -1,10 +1,15 @@
 package com.fourthstatelab.pinpointhomelesspeople;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -35,7 +40,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NavigationCentre extends AppCompatActivity {
- static FloatingActionButton fab;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -51,34 +55,26 @@ public class NavigationCentre extends AppCompatActivity {
      */
     private ViewPager mViewPager;
     public static Context con;
+    static Activity activity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_centre);
-
+        activity = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        con=this;
+        con = this;
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-        fab=(FloatingActionButton)findViewById(R.id.fab);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    con.startActivity(new Intent(con,My_Map.class));
-                finish();
-            }
-        });
-
 
 
     }
@@ -115,6 +111,8 @@ public class NavigationCentre extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        public LocationManager loc_manager;
+        public Location best_known_loc = null;
 
         public PlaceholderFragment() {
         }
@@ -134,32 +132,78 @@ public class NavigationCentre extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView=inflater.inflate(R.layout.fragment_navigation_centre,container,false);
+            View rootView = inflater.inflate(R.layout.fragment_navigation_centre, container, false);
 
 
-            switch(getArguments().getInt(ARG_SECTION_NUMBER)){
+            switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
                 case 2:
-                    rootView=inflater.inflate(R.layout.fragment_navigation_centre,container,false);
+                    rootView = inflater.inflate(R.layout.fragment_navigation_centre, container, false);
+                    ListView food_donate_view = (ListView) rootView.findViewById(R.id.listview);
+                    FloatingActionButton fabutton = (FloatingActionButton) rootView.findViewById(R.id.fab);
+
+                    fabutton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(con, My_Map.class);
+                            intent.putExtra("type", "food donate");
+                            con.startActivity(intent);
+                            activity.finish();
+                        }
+                    });
+
+                    DatabaseReference dataref;
+                    dataref = FirebaseDatabase.getInstance().getReference();
+                    Food_Distribution_list food_dist_list = new Food_Distribution_list(Data_holder.Food_distribution, con);
+                    food_donate_view.setAdapter(food_dist_list);
+                    get_food_list(dataref, food_dist_list);
+
 
                     break;
                 case 1:
-                    rootView=inflater.inflate(R.layout.fragment_navigation_centre,container,false);
-                    ListView homelessView=(ListView)rootView.findViewById(R.id.listview);
+                    rootView = inflater.inflate(R.layout.fragment_navigation_centre, container, false);
+                    ListView homelessView = (ListView) rootView.findViewById(R.id.listview);
+                    FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
 
+
+                    fab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(con, My_Map.class);
+                            intent.putExtra("type", "homeless");
+                            con.startActivity(intent);
+                            activity.finish();
+                        }
+                    });
 
                     DatabaseReference data_ref;
-                    data_ref= FirebaseDatabase.getInstance().getReference();
-                    Homeless_list home_list=new Homeless_list(con, Data_holder.Homeless_list);
+                    data_ref = FirebaseDatabase.getInstance().getReference();
+                    Homeless_list home_list = new Homeless_list(con, Data_holder.Homeless_list);
                     homelessView.setAdapter(home_list);
-                    get_homeless_list(data_ref,home_list);
+                    get_homeless_list(data_ref, home_list);
                     break;
             }
 
             return rootView;
         }
 
-        public void get_homeless_list(DatabaseReference data_ref, final Homeless_list homelessView)
-        {
+        public void get_homeless_list(DatabaseReference data_ref, final Homeless_list homelessView) {
+            LocationManager locationManager = (LocationManager) con.getSystemService(Context.LOCATION_SERVICE);
+            final Location myloc;
+            if (ActivityCompat.checkSelfPermission(con, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(con, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            myloc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+
+
+
             data_ref.child("Homeless").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -169,17 +213,29 @@ public class NavigationCentre extends AppCompatActivity {
 
                     for(DataSnapshot data:dataSnapshot.getChildren())
                     {
-                        Homeless homeless=new Homeless();
-                        homeless.name=data.child("name").getValue(String.class);
-                        homeless.downvotes=data.child("downvotes").getValue(Integer.class);
-                        homeless.upvotes=data.child("upvotes").getValue(Integer.class);
-                        homeless.age=data.child("age").getValue(Integer.class);
-                        homeless.tagged_by=data.child("tagged_by").getValue(String.class);
-                        homeless.other=data.child("other").getValue(String.class);
-                        homeless.gender=data.child("gender").getValue(String.class);
-                        homeless.loc_data=data.child("loc_data").getValue(Location_Data.class);
-                        Data_holder.Homeless_list.add(homeless);
-                        homelessView.notify(Data_holder.Homeless_list);
+                        Location_Data location_data=new Location_Data();
+                        location_data=data.child("loc_data").getValue(Location_Data.class);
+                        Location homeless_loc=new Location("homeless_loc");
+                        homeless_loc.setLatitude(location_data.latitude);
+                        homeless_loc.setLongitude(location_data.longitude);
+
+                        float distance=homeless_loc.distanceTo(myloc)/1000;
+                        if(distance<10.0) {
+
+
+                            Homeless homeless = new Homeless();
+                            homeless.name = data.child("name").getValue(String.class);
+                            homeless.downvotes = data.child("downvotes").getValue(Integer.class);
+                            homeless.upvotes = data.child("upvotes").getValue(Integer.class);
+                            homeless.age = data.child("age").getValue(Integer.class);
+                            homeless.tagged_by = data.child("tagged_by").getValue(String.class);
+                            homeless.other = data.child("other").getValue(String.class);
+                            homeless.gender = data.child("gender").getValue(String.class);
+                            homeless.loc_data = data.child("loc_data").getValue(Location_Data.class);
+                            Data_holder.Homeless_list.add(homeless);
+                            homelessView.notify(Data_holder.Homeless_list);
+                        }
+
 
                     }
                 }
@@ -189,6 +245,38 @@ public class NavigationCentre extends AppCompatActivity {
 
                 }
             });
+        }
+
+
+        public void get_food_list(DatabaseReference dataref,final Food_Distribution_list foodview)
+        {
+
+            dataref.child("FoodDonate").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Data_holder.Food_distribution=new ArrayList<FoodDistribution>();
+                    foodview.notify_myfunc(Data_holder.Food_distribution);
+
+                    for(DataSnapshot data:dataSnapshot.getChildren())
+                    {
+                        FoodDistribution food_dist=new FoodDistribution();
+                        food_dist.veg_nonveg=data.child("veg_nonveg").getValue(Integer.class);
+                        food_dist.name_of_provider=data.child("name_of_provider").getValue(String.class);
+                        food_dist.address=data.child("address").getValue(String.class);
+                        food_dist.quantity=data.child("quantity").getValue(Double.class);
+                        food_dist.phone_number=data.child("phone_number").getValue(String.class);
+                        food_dist.loc_data=data.child("loc_data").getValue(Location_Data.class);
+                        Data_holder.Food_distribution.add(food_dist);
+                        foodview.notify_myfunc(Data_holder.Food_distribution);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
         }
 
     }
