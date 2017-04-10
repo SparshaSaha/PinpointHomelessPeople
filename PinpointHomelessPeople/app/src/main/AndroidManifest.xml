@@ -34,10 +34,7 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
         <activity android:name=".Signup" />
-        <activity
-            android:name=".Navigation_Centre"
-            android:label="@string/title_activity_navigation__centre"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".NavigationCentre"
             android:label="@string/title_activity_navigation_centre"
@@ -58,7 +55,12 @@
             android:name=".My_Map"
             android:label="@string/title_activity_my__map" />
         <activity android:name=".Fill_homeless_details" />
-        <activity android:name=".Fill_food_details"></activity>
+        <activity android:name=".Fill_food_details" />
+        <activity
+            android:name=".ViewMap"
+            android:label="@string/title_activity_view_map" />
+        <activity android:name=".HomelessViewActivity"
+            ></activity>
     </application>
 
 </manifest>

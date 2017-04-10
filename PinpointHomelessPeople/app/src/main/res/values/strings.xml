@@ -23,4 +23,5 @@
     <string name="title_activity_navigation_centre">NavigationCentre</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_my__map">Map</string>
+    <string name="title_activity_view_map">Map</string>
 </resources>

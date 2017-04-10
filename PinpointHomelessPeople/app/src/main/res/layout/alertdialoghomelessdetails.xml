@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/nameofhomeless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="54dp"
+        android:text="TextView"
+        android:layout_marginStart="26dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/pictureofhomeless" />
+
+    <ImageView
+        android:id="@+id/pictureofhomeless"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/nameofhomeless"
+        app:srcCompat="@color/colorAccent" />
+
+    <TextView
+        android:id="@+id/ageofhomeless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/nameofhomeless"
+        android:layout_below="@+id/nameofhomeless"
+        android:layout_marginTop="11dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/sexofhomeless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ageofhomeless"
+        android:layout_marginStart="43dp"
+        android:layout_toEndOf="@+id/ageofhomeless"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/otherdetailshomeless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/ageofhomeless"
+        android:layout_below="@+id/ageofhomeless"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="18dp"
+        android:text="TextView" />
+</RelativeLayout>

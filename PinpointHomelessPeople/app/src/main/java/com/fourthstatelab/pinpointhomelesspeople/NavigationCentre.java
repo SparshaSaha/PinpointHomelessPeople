@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.provider.Settings;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -24,10 +25,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.data.DataHolder;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -56,6 +60,7 @@ public class NavigationCentre extends AppCompatActivity {
     private ViewPager mViewPager;
     public static Context con;
     static Activity activity;
+    static int off=0;
 
 
     @Override
@@ -75,6 +80,17 @@ public class NavigationCentre extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+        off = 0;
+        try {
+            off = Settings.Secure.getInt(getContentResolver(), Settings.Secure.LOCATION_MODE);
+        } catch (Settings.SettingNotFoundException e) {
+            e.printStackTrace();
+        }
+        if(off==0){
+            Intent onGPS = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(onGPS);
+
+        }
 
 
     }
@@ -129,6 +145,8 @@ public class NavigationCentre extends AppCompatActivity {
             return fragment;
         }
 
+
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -164,7 +182,14 @@ public class NavigationCentre extends AppCompatActivity {
                     ListView homelessView = (ListView) rootView.findViewById(R.id.listview);
                     FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
 
-
+                    Button viewinmap=(Button)rootView.findViewById(R.id.viewinmap);
+                    viewinmap.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent=new Intent(con,ViewMap.class);
+                            startActivity(intent);
+                        }
+                    });
                     fab.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -179,6 +204,7 @@ public class NavigationCentre extends AppCompatActivity {
                     data_ref = FirebaseDatabase.getInstance().getReference();
                     Homeless_list home_list = new Homeless_list(con, Data_holder.Homeless_list);
                     homelessView.setAdapter(home_list);
+
                     get_homeless_list(data_ref, home_list);
                     break;
             }

@@ -5,12 +5,12 @@
     <Button
         android:text="Yes"
         android:layout_width="wrap_content"
-        android:layout_below="@+id/Message"
-        android:layout_alignStart="@+id/Message"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="27dp"
         android:id="@+id/yes"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"
+        android:layout_below="@+id/Message"
+        android:layout_toStartOf="@+id/no"
+        android:layout_marginEnd="45dp" />
 
     <TextView
         android:text="Do you want to confirm this location?"
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:id="@+id/no"
-        android:layout_marginEnd="35dp"
+        android:layout_marginEnd="41dp"
         android:layout_alignBaseline="@+id/yes"
         android:layout_alignBottom="@+id/yes"
         android:layout_alignEnd="@+id/Message" />

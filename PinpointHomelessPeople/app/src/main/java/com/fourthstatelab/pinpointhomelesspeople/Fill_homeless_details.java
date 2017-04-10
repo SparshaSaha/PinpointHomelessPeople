@@ -1,7 +1,6 @@
 package com.fourthstatelab.pinpointhomelesspeople;
 
 import android.content.Intent;
-import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -29,9 +27,9 @@ Intent prev_intent;
         database=FirebaseDatabase.getInstance().getReference();
         firebaseAuth=FirebaseAuth.getInstance();
 
-        name=(EditText)findViewById(R.id.name);
+        name=(EditText)findViewById(R.id.nameofhomeless);
         gender=(EditText)findViewById(R.id.gender);
-        age=(EditText)findViewById(R.id.age);
+        age=(EditText)findViewById(R.id.ageofhomeless);
         other=(EditText)findViewById(R.id.other);
         done=(Button)findViewById(R.id.done);
 

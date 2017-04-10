@@ -7,10 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * Created by sparsha on 7/3/17.
@@ -55,7 +52,7 @@ class Homeless_list extends BaseAdapter{
     public View getView(int i, View view, ViewGroup viewGroup) {
         View myview = inflater.inflate(R.layout.homeless_listview,null);
         Holder holder=new Holder();
-        holder.name=(TextView)myview.findViewById(R.id.name);
+        holder.name=(TextView)myview.findViewById(R.id.nameofhomeless);
         holder.age=(TextView)myview.findViewById(R.id.myage);
         holder.others=(TextView)myview.findViewById(R.id.others);
 
@@ -118,7 +115,7 @@ class Food_Distribution_list extends BaseAdapter
     public View getView(int i, View view, ViewGroup viewGroup) {
        View myview= layoutInflater.inflate(R.layout.food_dist_listview,null);
         Holder holder=new Holder();
-        holder.name= (TextView) myview.findViewById(R.id.name);
+        holder.name= (TextView) myview.findViewById(R.id.nameofhomeless);
         holder.address=(TextView)myview.findViewById(R.id.address);
         holder.phone=(TextView)myview.findViewById(R.id.ph_no);
         holder.quantity=(TextView)myview.findViewById(R.id.quantity);

@@ -7,7 +7,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/name"
+        android:id="@+id/nameofhomeless"
         android:text="TextView" />
 
     <TextView
@@ -22,7 +22,7 @@
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/name"
+        android:layout_below="@+id/nameofhomeless"
         android:layout_alignParentStart="true"
         android:layout_marginTop="17dp"
         android:id="@+id/myage" />

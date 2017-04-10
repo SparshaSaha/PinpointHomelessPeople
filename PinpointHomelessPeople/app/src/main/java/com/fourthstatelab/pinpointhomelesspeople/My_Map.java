@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
+import android.provider.Settings;
 import android.provider.SyncStateContract;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -39,6 +40,7 @@ public class My_Map extends FragmentActivity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my__map);
         in = getIntent();
+
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -86,6 +88,9 @@ public class My_Map extends FragmentActivity implements OnMapReadyCallback {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
+
+
+
         mMap.setMyLocationEnabled(true);
         LocationManager locmanager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Location loc = locmanager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
