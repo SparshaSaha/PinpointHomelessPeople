@@ -60,6 +60,7 @@
             android:name=".ViewMap"
             android:label="@string/title_activity_view_map" />
         <activity android:name=".HomelessViewActivity"
+
             ></activity>
     </application>
 

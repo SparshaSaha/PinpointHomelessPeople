@@ -1,6 +1,7 @@
 package com.fourthstatelab.pinpointhomelesspeople;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -74,8 +75,10 @@ public class ViewMap extends FragmentActivity implements OnMapReadyCallback {
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-
                 int i= (int) marker.getTag();
+                Intent intent=new Intent(ViewMap.this,HomelessViewActivity.class);
+                intent.putExtra("index",i);
+                startActivity(intent);
 
                 return false;
             }
