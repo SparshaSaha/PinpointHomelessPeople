@@ -159,10 +159,12 @@ Intent prev_intent;
                 current_homeless.pic_data_url="imagepresent";
                 Location_Data locdata=new Gson().fromJson(z,new TypeToken<Location_Data>(){}.getType());
                 current_homeless.loc_data=locdata;
+                Long s=System.currentTimeMillis() ;
+                current_homeless.id=s;
 
 
                 try {
-                    database.child("Homeless").child(System.currentTimeMillis() + "").setValue(current_homeless);
+                    database.child("Homeless").child(s+"").setValue(current_homeless);
                 }
                 catch(Exception e)
                 {
@@ -190,10 +192,12 @@ Intent prev_intent;
             current_homeless.pic_data_url="nil";
             Location_Data locdata=new Gson().fromJson(z,new TypeToken<Location_Data>(){}.getType());
             current_homeless.loc_data=locdata;
+            Long s=System.currentTimeMillis() ;
+            current_homeless.id=s;
 
 
             try {
-                database.child("Homeless").child(System.currentTimeMillis() + "").setValue(current_homeless);
+                database.child("Homeless").child(s+"").setValue(current_homeless);
             }
             catch(Exception e)
             {

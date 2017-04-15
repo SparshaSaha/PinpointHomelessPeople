@@ -35,6 +35,7 @@ class Homeless
     public int downvotes;
     public int upvotes;
     public String pic_data_url;
+    public long id;
 }
 
 class FoodDistribution

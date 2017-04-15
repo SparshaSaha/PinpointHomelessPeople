@@ -2,15 +2,23 @@ package com.fourthstatelab.pinpointhomelesspeople;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -63,7 +71,7 @@ class Homeless_list extends BaseAdapter{
     public View getView(final int i, View view, ViewGroup viewGroup) {
         View myview = inflater.inflate(R.layout.card_homeless,null);
 
-        Homeless homeless =  home_list.get(i);
+        final Homeless homeless =  home_list.get(i);
 
         TextView nameView =(TextView)myview.findViewById(R.id.homeless_name);
         nameView.setText(homeless.name);
@@ -90,6 +98,34 @@ class Homeless_list extends BaseAdapter{
         taggedView.setText("Tagged By: "+homeless.tagged_by);
         taggedView.setTypeface(nunito_reg);
 
+        ImageButton thumbsup=(ImageButton)myview.findViewById(R.id.homeless_thumbsUp);
+        ImageButton thumbsdown=(ImageButton)myview.findViewById(R.id.homeless_thumbsDown);
+        final TextView no_up=(TextView)myview.findViewById(R.id.homeless_no_thumbsUp);
+        final TextView no_down=(TextView)myview.findViewById(R.id.homeless_no_thumbsDown);
+        no_up.setText(home_list.get(i).upvotes+"");
+        no_down.setText(home_list.get(i).downvotes+"");
+
+        final DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
+
+
+        thumbsup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                home_list.get(i).upvotes=home_list.get(i).upvotes+1;
+              databaseReference.child("Homeless").child(home_list.get(i).id+"").setValue(home_list.get(i));
+                Log.d("id",home_list.get(i).id+"");
+                no_up.setText(home_list.get(i).upvotes+"");
+            }
+        });
+
+        thumbsdown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                databaseReference.child("Homeless").child(home_list.get(i).id+"").child("downvotes").setValue(home_list.get(i).downvotes+1);
+                home_list.get(i).downvotes=home_list.get(i).downvotes+1;
+                no_down.setText(home_list.get(i).downvotes+"");
+            }
+        });
 
 
         StorageReference storage= FirebaseStorage.getInstance().getReference();

@@ -331,6 +331,7 @@ public class NavigationCentre extends AppCompatActivity {
                                 homeless.other = data.child("other").getValue(String.class);
                                 homeless.gender = data.child("gender").getValue(String.class);
                                 homeless.loc_data = data.child("loc_data").getValue(Location_Data.class);
+                                homeless.id=data.child("id").getValue(Long.class);
                                 Data_holder.Homeless_list.add(homeless);
 
                             }
