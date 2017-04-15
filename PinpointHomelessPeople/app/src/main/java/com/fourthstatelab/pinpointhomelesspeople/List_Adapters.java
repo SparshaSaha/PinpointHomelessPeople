@@ -16,6 +16,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import static com.fourthstatelab.pinpointhomelesspeople.Utility.nunito_Extrabold;
 import static com.fourthstatelab.pinpointhomelesspeople.Utility.nunito_bold;
 import static com.fourthstatelab.pinpointhomelesspeople.Utility.nunito_reg;
 
@@ -23,8 +24,6 @@ import static com.fourthstatelab.pinpointhomelesspeople.Utility.nunito_reg;
  * Created by sparsha on 15/4/17.
  */
 
-public class List_Adapters {
-}
 
 class Homeless_list extends BaseAdapter{
     List<Homeless> home_list;
@@ -67,7 +66,7 @@ class Homeless_list extends BaseAdapter{
 
         TextView nameView =(TextView)myview.findViewById(R.id.homeless_name);
         nameView.setText(homeless.name);
-        nameView.setTypeface(nunito_bold);
+        nameView.setTypeface(nunito_Extrabold);
 
 
         TextView ageView =(TextView)myview.findViewById(R.id.homeless_age);
@@ -164,13 +163,17 @@ class Food_Distribution_list extends BaseAdapter
         holder.quantity=(TextView)myview.findViewById(R.id.quantity);
         holder.type=(TextView)myview.findViewById(R.id.mytype);
 
+        holder.name.setTypeface(nunito_bold);
+        holder.address.setTypeface(nunito_reg);
+        holder.phone.setTypeface(nunito_reg);
+        holder.quantity.setTypeface(nunito_reg);
+        holder.type.setTypeface(nunito_reg);
+
         holder.name.setText(foodlist.get(i).name_of_provider);
-        holder.quantity.setText(foodlist.get(i).quantity+"");
+        holder.quantity.setText(foodlist.get(i).quantity+" Serves");
         holder.address.setText(foodlist.get(i).address);
-        holder.phone.setText(foodlist.get(i).phone_number);
-        holder.type.setText(foodlist.get(i).veg_nonveg+"");
-
-
+        holder.phone.setText("Ph: "+foodlist.get(i).phone_number);
+        holder.type.setText(getFoodType(foodlist.get(i).veg_nonveg));
 
         return myview;
     }
@@ -179,5 +182,9 @@ class Food_Distribution_list extends BaseAdapter
     {
         foodlist=flist;
         notifyDataSetChanged();
+    }
+
+    private String getFoodType(int vegnvegCode){
+        return vegnvegCode==0 ? "Veg" : "Non Veg";
     }
 }

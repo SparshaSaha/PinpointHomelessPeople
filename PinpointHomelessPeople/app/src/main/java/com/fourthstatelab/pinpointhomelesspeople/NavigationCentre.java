@@ -339,7 +339,7 @@ public class NavigationCentre extends AppCompatActivity {
                         food_dist.veg_nonveg=data.child("veg_nonveg").getValue(Integer.class);
                         food_dist.name_of_provider=data.child("name_of_provider").getValue(String.class);
                         food_dist.address=data.child("address").getValue(String.class);
-                        food_dist.quantity=data.child("quantity").getValue(Double.class);
+                        food_dist.quantity=data.child("quantity").getValue(Integer.class);
                         food_dist.phone_number=data.child("phone_number").getValue(String.class);
                         food_dist.loc_data=data.child("loc_data").getValue(Location_Data.class);
                         Data_holder.Food_distribution.add(food_dist);
