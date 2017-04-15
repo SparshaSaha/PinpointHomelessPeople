@@ -33,7 +33,9 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
+
 import com.fourthstatelab.pinpointhomelesspeople.ListView;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,7 +73,7 @@ public class NavigationCentre extends AppCompatActivity {
     private ViewPager mViewPager;
     public static Context con;
     static Activity activity;
-    static int off=0;
+    static int off = 0;
 
     TextView appName;
     FloatingActionButton fb_ViewMap;
@@ -93,20 +95,20 @@ public class NavigationCentre extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-        Utility.setStatusBar(getWindow(),con);
-        appName = (TextView)findViewById(R.id.Home_appName);
+        Utility.setStatusBar(getWindow(), con);
+        appName = (TextView) findViewById(R.id.Home_appName);
         appName.setTypeface(fredoka);
-        fb_ViewMap =(FloatingActionButton)findViewById(R.id.viewMap);
+        fb_ViewMap = (FloatingActionButton) findViewById(R.id.viewMap);
         fb_ViewMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int selection=tabLayout.getSelectedTabPosition();
-                switch (selection){
+                int selection = tabLayout.getSelectedTabPosition();
+                switch (selection) {
                     case 0:
-                        startActivity(new Intent(con,ViewMap.class));
+                        startActivity(new Intent(con, ViewMap.class));
                         break;
                     case 1:
-                        startActivity(new Intent(con,ViewMapFoodWastage.class));
+                        startActivity(new Intent(con, ViewMapFoodWastage.class));
                         break;
                 }
             }
@@ -117,7 +119,7 @@ public class NavigationCentre extends AppCompatActivity {
         } catch (Settings.SettingNotFoundException e) {
             e.printStackTrace();
         }
-        if(off==0){
+        if (off == 0) {
             Intent onGPS = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivity(onGPS);
 
@@ -144,16 +146,15 @@ public class NavigationCentre extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }
-        else if(id==R.id.action_Share){
-            PackageManager pm=getPackageManager();
+        } else if (id == R.id.action_Share) {
+            PackageManager pm = getPackageManager();
             try {
 
                 Intent waIntent = new Intent(Intent.ACTION_SEND);
                 waIntent.setType("text/plain");
                 String text = "https://play.google.com/store/apps/details?id=com.fourthstatelabs.zchedule&hl=en";
 
-                PackageInfo info=pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+                PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
                 //Check if package exists or not. If not then code
                 //in catch block will be called
                 waIntent.setPackage("com.whatsapp");
@@ -198,7 +199,6 @@ public class NavigationCentre extends AppCompatActivity {
         }
 
 
-
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -232,7 +232,6 @@ public class NavigationCentre extends AppCompatActivity {
                             activity.finish();
                         }
                     });
-
 
 
                     DatabaseReference dataref;
@@ -301,7 +300,7 @@ public class NavigationCentre extends AppCompatActivity {
             } catch (Settings.SettingNotFoundException e) {
                 e.printStackTrace();
             }
-            if(off!=0) {
+            if (off != 0) {
                 myloc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
 
@@ -348,37 +347,66 @@ public class NavigationCentre extends AppCompatActivity {
 
                     }
                 });
-            }
-            else
-            {
+            } else {
                 Toast.makeText(con, "Please turn on Location", Toast.LENGTH_SHORT).show();
             }
         }
 
 
-        public void get_food_list(DatabaseReference dataref,final Food_Distribution_list foodview)
-        {
+        public void get_food_list(DatabaseReference dataref, final Food_Distribution_list foodview) {
 
             dataref.child("FoodDonate").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    Data_holder.Food_distribution=new ArrayList<FoodDistribution>();
+                    Data_holder.Food_distribution = new ArrayList<FoodDistribution>();
                     foodview.notify_myfunc(Data_holder.Food_distribution);
+                    LocationManager locationManager = (LocationManager) con.getSystemService(Context.LOCATION_SERVICE);
 
-                    for(DataSnapshot data:dataSnapshot.getChildren())
-                    {
-                        FoodDistribution food_dist=new FoodDistribution();
-                        food_dist.veg_nonveg=data.child("veg_nonveg").getValue(Integer.class);
-                        food_dist.name_of_provider=data.child("name_of_provider").getValue(String.class);
-                        food_dist.address=data.child("address").getValue(String.class);
-                        food_dist.quantity=data.child("quantity").getValue(Integer.class);
-                        food_dist.phone_number=data.child("phone_number").getValue(String.class);
-                        food_dist.loc_data=data.child("loc_data").getValue(Location_Data.class);
-                        Data_holder.Food_distribution.add(food_dist);
 
+                    try {
+                        off = Settings.Secure.getInt(con.getContentResolver(), Settings.Secure.LOCATION_MODE);
+                    } catch (Settings.SettingNotFoundException e) {
+                        e.printStackTrace();
                     }
-                    Collections.reverse(Data_holder.Food_distribution);
-                    foodview.notify_myfunc(Data_holder.Food_distribution);
+                    if (off != 0) {
+                        if (ActivityCompat.checkSelfPermission(con, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(con, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    ActivityCompat#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for ActivityCompat#requestPermissions for more details.
+                            return;
+                        }
+                        Location myloc;
+                        myloc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+
+                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+                            FoodDistribution food_dist = new FoodDistribution();
+                            Location_Data locdata=data.child("loc_data").getValue(Location_Data.class);
+                            Location food_loc=new Location("food_loc");
+                            food_loc.setLatitude(locdata.latitude);
+                            food_loc.setLongitude(locdata.longitude);
+                            float distance=food_loc.distanceTo(myloc)/1000;
+
+
+
+                            if(distance<10.0) {
+                                food_dist.veg_nonveg = data.child("veg_nonveg").getValue(Integer.class);
+                                food_dist.name_of_provider = data.child("name_of_provider").getValue(String.class);
+                                food_dist.address = data.child("address").getValue(String.class);
+                                food_dist.quantity = data.child("quantity").getValue(Integer.class);
+                                food_dist.phone_number = data.child("phone_number").getValue(String.class);
+                                food_dist.loc_data = data.child("loc_data").getValue(Location_Data.class);
+                                Data_holder.Food_distribution.add(food_dist);
+                            }
+
+                        }
+                        Collections.reverse(Data_holder.Food_distribution);
+                        foodview.notify_myfunc(Data_holder.Food_distribution);
+                    }
                 }
 
                 @Override
