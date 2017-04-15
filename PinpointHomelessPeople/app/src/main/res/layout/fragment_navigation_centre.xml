@@ -35,14 +35,6 @@
         android:dividerHeight="5dp"
         android:layout_above="@+id/fab" />
 
-    <Button
-        android:id="@+id/viewinmap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/fab"
-        android:layout_marginEnd="9dp"
-        android:layout_toStartOf="@+id/fab"
-        android:text="View in Map" />
 
 
 </RelativeLayout>

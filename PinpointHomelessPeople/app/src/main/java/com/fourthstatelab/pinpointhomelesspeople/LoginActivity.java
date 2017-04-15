@@ -1,5 +1,6 @@
 package com.fourthstatelab.pinpointhomelesspeople;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.media.Image;
 import android.support.annotation.NonNull;
@@ -34,6 +35,8 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth fire_auth;
     ImageButton toggleButton;
     boolean isPasswordShown =false;
+
+    ProgressDialog progress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         forgot_password.setTypeface(nunito_reg);
         emailid_login.setTypeface(nunito_reg);
         password_login.setTypeface(nunito_reg);
+        progress=new ProgressDialog(this);
 
 
         sign_up.setOnClickListener(new View.OnClickListener() {
@@ -64,8 +68,12 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(emailid_login.getText().toString().length()>0 && password_login.getText().toString().length()>0)
+                if(emailid_login.getText().toString().length()>0 && password_login.getText().toString().length()>0) {
+                    progress.setMessage("Signing you in..");
+                    progress.setIndeterminate(true);
+                    progress.show();
                     sign_user_in();
+                }
                 else
                     Toast.makeText(LoginActivity.this,"Email-ID and password must not be empty", Toast.LENGTH_SHORT).show();
             }
@@ -117,6 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                     Shared_Preferences_class.put_login_details(getApplicationContext(),login);
                     Shared_Preferences_class.set_keep_logged_in(true,getApplicationContext());
                     startActivity(new Intent(LoginActivity.this,NavigationCentre.class));
+                    overridePendingTransition(R.anim.slide_in_up,R.anim.slide_out_up);
                     finish();
                 }
                 else
@@ -139,6 +148,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.e("tag",e.getMessage());
                     }
                 }
+                progress.cancel();
             }
         });
     }
