@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -29,6 +31,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Calendar;
 
 import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
 
@@ -36,9 +39,11 @@ public class Fill_homeless_details extends AppCompatActivity {
 Intent prev_intent;
     DatabaseReference database;
     FirebaseAuth firebaseAuth;
-    EditText name,gender,age,other;
+    EditText name,age,other;
     Button done;
     FloatingActionButton image;
+
+    CheckBox cb_Male, cb_Female;
 
     ImageView imageView;
     Bitmap global;
@@ -53,7 +58,8 @@ Intent prev_intent;
         firebaseAuth=FirebaseAuth.getInstance();
 
         name=(EditText)findViewById(R.id.nameofhomeless);
-        gender=(EditText)findViewById(R.id.gender);
+        cb_Male=(CheckBox)findViewById(R.id.cbMale);
+        cb_Female=(CheckBox)findViewById(R.id.cbFeMale);
         age=(EditText)findViewById(R.id.ageofhomeless);
         other=(EditText)findViewById(R.id.other);
         done=(Button)findViewById(R.id.done);
@@ -79,6 +85,22 @@ Intent prev_intent;
                 uploadimage(global);
 
 
+            }
+        });
+
+        cb_Female.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) cb_Male.setChecked(false);
+                else if(!cb_Male.isChecked()) cb_Female.setChecked(true);
+            }
+        });
+
+        cb_Male.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) cb_Female.setChecked(false);
+                else if(!cb_Female.isChecked()) cb_Male.setChecked(true);
             }
         });
     }
@@ -115,7 +137,7 @@ Intent prev_intent;
                 k =taskSnapshot.getDownloadUrl().toString();
                 Homeless current_homeless=new Homeless();
                 current_homeless.name=name.getText().toString();
-                current_homeless.gender=gender.getText().toString();
+                current_homeless.gender=getGender();
                 current_homeless.age=Integer.parseInt(age.getText().toString());
                 current_homeless.other=other.getText().toString();
                 current_homeless.tagged_by=firebaseAuth.getCurrentUser().getEmail();
@@ -141,5 +163,9 @@ Intent prev_intent;
             }
         });
 
+    }
+
+    String getGender(){
+        return cb_Female.isChecked() ?"Female":"Male";
     }
 }
