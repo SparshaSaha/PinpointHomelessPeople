@@ -1,18 +1,35 @@
 package com.fourthstatelab.pinpointhomelesspeople;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ImageView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import java.io.ByteArrayOutputStream;
+
+import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
 
 public class Fill_homeless_details extends AppCompatActivity {
 Intent prev_intent;
@@ -20,6 +37,10 @@ Intent prev_intent;
     FirebaseAuth firebaseAuth;
     EditText name,gender,age,other;
     Button done;
+    FloatingActionButton image;
+
+    ImageView imageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +54,20 @@ Intent prev_intent;
         other=(EditText)findViewById(R.id.other);
         done=(Button)findViewById(R.id.done);
 
+        image=(FloatingActionButton)findViewById(R.id.imagecapture);
+        imageView=(ImageView)findViewById(R.id.imageView);
+        imageView.setVisibility(View.INVISIBLE);
+
         prev_intent=getIntent();
         final String z=prev_intent.getStringExtra("lat_lon_jason");
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cameraIntent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, 1067);
+            }
+        });
 
         done.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,5 +96,39 @@ Intent prev_intent;
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1067 && resultCode == Activity.RESULT_OK) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            imageView.setVisibility(View.VISIBLE);
+            imageView.setImageBitmap(photo);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void uploadimage(Bitmap bitmap)
+    {
+        FirebaseStorage firebasestorage=FirebaseStorage.getInstance();
+        StorageReference storageref=firebasestorage.getReferenceFromUrl("gs://pinpointhomelesspeople.appspot.com/");
+        StorageReference mountainImagesRef = storageref.child("images/" + System.currentTimeMillis()+ ".jpg");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
+        byte[] data = baos.toByteArray();
+        UploadTask uploadTask = mountainImagesRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                //Uri downloadUrl =taskSnapshot.getDownloadUrl();
+            }
+        });
+
     }
 }

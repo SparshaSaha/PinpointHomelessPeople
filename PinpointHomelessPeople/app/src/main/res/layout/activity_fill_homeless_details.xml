@@ -73,7 +73,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="22dp"
         android:layout_marginTop="30dp"
-        android:id="@+id/image"
+        android:id="@+id/imagecapture"
         app:backgroundTint="#e06513"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -81,16 +81,25 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/image"
-        android:layout_toStartOf="@+id/image"
+        android:layout_alignBottom="@+id/imagecapture"
+        android:layout_toStartOf="@+id/imagecapture"
         android:layout_marginEnd="18dp"
         android:id="@+id/photo" />
 
     <Button
-        android:text="Done"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/done"
-        android:layout_below="@+id/photo"
-        android:layout_centerHorizontal="true" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:text="Done" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/other"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        app:srcCompat="@drawable/common_full_open_on_phone" />
 </RelativeLayout>
