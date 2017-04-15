@@ -21,7 +21,7 @@ public class Start_Page extends AppCompatActivity {
         Utility.prepareFonts(getApplicationContext());
         Utility.setStatusBar(getWindow(),getApplicationContext());
         Handler splash_handler=new Handler();
-        splash_handler.postDelayed(SwitchActivity,2000);
+        splash_handler.postDelayed(SwitchActivity,1000);
 
 
     }

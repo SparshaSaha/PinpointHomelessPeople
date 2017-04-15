@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.provider.Settings;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -21,12 +22,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -204,9 +207,11 @@ public class NavigationCentre extends AppCompatActivity {
 
             switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
                 case 2:
+                    int firstVis = 0;
                     rootView = inflater.inflate(R.layout.fragment_navigation_centre, container, false);
+                    final FloatingActionButton fabutton = (FloatingActionButton) rootView.findViewById(R.id.fab);
                     ListView food_donate_view = (ListView) rootView.findViewById(R.id.listview);
-                    FloatingActionButton fabutton = (FloatingActionButton) rootView.findViewById(R.id.fab);
+
 
                     fabutton.setOnClickListener(new View.OnClickListener() {
                         @Override
