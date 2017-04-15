@@ -3,6 +3,7 @@ package com.fourthstatelab.pinpointhomelesspeople;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -41,12 +42,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static com.fourthstatelab.pinpointhomelesspeople.Utility.fredoka;
+import static java.security.AccessController.getContext;
 
 public class NavigationCentre extends AppCompatActivity {
     /**
@@ -247,6 +250,10 @@ public class NavigationCentre extends AppCompatActivity {
 
                     get_homeless_list(data_ref, home_list);
                     break;
+
+                case 3:
+                    rootView=inflater.inflate(R.layout.fragment_navigation_centre,container,false);
+
             }
 
             return rootView;
@@ -372,7 +379,7 @@ public class NavigationCentre extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
 
         @Override
@@ -382,6 +389,8 @@ public class NavigationCentre extends AppCompatActivity {
                     return "Homeless";
                 case 1:
                     return "Food Wastage";
+                case 2:
+                    return "My Contributions";
             }
             return null;
         }
