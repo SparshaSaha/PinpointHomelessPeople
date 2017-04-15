@@ -15,6 +15,14 @@
         android:layout_height="250dp"
         android:layout_width="200dp"
         android:src="@drawable/logo"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:id="@+id/logoView"/>
+
+    <ProgressBar
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/logoView"
+        android:layout_marginTop="10dp"/>
 
 </RelativeLayout>

@@ -4,11 +4,47 @@
     android:id="@+id/activity_signup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.fourthstatelab.pinpointhomelesspeople.Signup">
+    <SurfaceView
+        android:layout_height="200dp"
+        android:layout_width="match_parent"
+        android:id="@+id/sv_signUp"
+        android:background="@color/colorPrimaryDark"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="60sp"
+        android:paddingStart="10dp"
+        android:paddingTop="10dp"
+        android:text="App Name"
+        android:textColor="@android:color/white"
+        android:id="@+id/signup_appName"
+        android:layout_alignTop="@id/sv_signUp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:paddingStart="20dp"
+        android:paddingBottom="20dp"
+        android:text="Sign Up"
+        android:textColor="@android:color/white"
+        android:id="@+id/signup_title"
+        android:layout_alignBottom="@id/sv_signUp"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/sv_signUp"
+        >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
 
     <EditText
         android:layout_width="300dp"
@@ -17,7 +53,6 @@
         android:ems="10"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="107dp"
         android:id="@+id/email_signup"
         android:hint="Email id" />
 
@@ -28,7 +63,7 @@
         android:ems="10"
         android:layout_below="@+id/email_signup"
         android:layout_alignEnd="@+id/email_signup"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/password_signup"
         android:hint="Password" />
 
@@ -39,7 +74,7 @@
         android:ems="10"
         android:layout_below="@+id/password_signup"
         android:layout_alignStart="@+id/password_signup"
-        android:layout_marginTop="31dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/reenterpassword_signup"
         android:hint="Re-enter password" />
 
@@ -54,4 +89,6 @@
         android:background="#ee000000"
         android:textColor="#ffffff"
         android:textSize="18sp" />
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

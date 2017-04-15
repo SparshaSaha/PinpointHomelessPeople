@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,9 +19,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
+import static com.fourthstatelab.pinpointhomelesspeople.Utility.fredoka;
+
 public class Signup extends AppCompatActivity {
     EditText email,password,re_password;
     Button signup_button;
+
+    TextView appName, title;
 
     private FirebaseAuth fire_auth;
 
@@ -28,7 +33,7 @@ public class Signup extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
+        Utility.setStatusBar(getWindow(),getApplicationContext());
         email=(EditText)findViewById(R.id.email_signup);
         password=(EditText)findViewById(R.id.password_signup);
         signup_button=(Button)findViewById(R.id.signup_button);
@@ -49,6 +54,10 @@ public class Signup extends AppCompatActivity {
                 }
             }
         });
+        title=(TextView)findViewById(R.id.signup_title);
+        title.setTypeface(fredoka);
+        appName = (TextView)findViewById(R.id.signup_appName);
+        appName.setTypeface(fredoka);
     }
 
     public void try_signing_up_user()
@@ -59,7 +68,7 @@ public class Signup extends AppCompatActivity {
                 if(task.isSuccessful())
                 {
                     Toast.makeText(Signup.this, "Successfully Registered", Toast.LENGTH_SHORT).show();
-
+                    finish();
                 }
                 else
                 {

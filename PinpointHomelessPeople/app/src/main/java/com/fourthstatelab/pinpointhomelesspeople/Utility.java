@@ -22,7 +22,8 @@ public class Utility {
         nunito_reg = Typeface.createFromAsset(context.getAssets(), "fonts/Nunito-Regular.ttf");
     }
 
-    public static void setStatusBar(Window window, Context context, int color) {
+    public static void setStatusBar(Window window, Context context) {
+        int color = R.color.colorPrimaryDark;
         if(Build.VERSION.SDK_INT>=21){
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

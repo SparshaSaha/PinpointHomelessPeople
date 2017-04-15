@@ -19,9 +19,9 @@ public class Start_Page extends AppCompatActivity {
         setContentView(R.layout.activity_start__page);
 
         Utility.prepareFonts(getApplicationContext());
-        Utility.setStatusBar(getWindow(),getApplicationContext(),R.color.colorPrimaryDark);
+        Utility.setStatusBar(getWindow(),getApplicationContext());
         Handler splash_handler=new Handler();
-        splash_handler.postDelayed(SwitchActivity,10000);
+        splash_handler.postDelayed(SwitchActivity,2000);
 
 
     }
@@ -35,6 +35,7 @@ public class Start_Page extends AppCompatActivity {
             else
             {
                 startActivity(new Intent(Start_Page.this,LoginActivity.class));
+                overridePendingTransition(R.anim.slide_in_up,R.anim.slide_out_up);
                 finish();
             }
 
@@ -63,6 +64,7 @@ public class Start_Page extends AppCompatActivity {
                     catch(Exception e)
                     {
                         startActivity(new Intent(Start_Page.this,LoginActivity.class));
+                        overridePendingTransition(R.anim.slide_in_up,R.anim.slide_out_up);
                         finish();
                     }
                 }
