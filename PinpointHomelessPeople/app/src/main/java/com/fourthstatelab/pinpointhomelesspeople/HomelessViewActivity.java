@@ -13,12 +13,15 @@ import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import static com.fourthstatelab.pinpointhomelesspeople.Utility.nunito_bold;
+
 public class HomelessViewActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.alertdialoghomelessdetails);
+        Utility.setStatusBar(getWindow(),getApplicationContext());
         TextView name=(TextView)findViewById(R.id.nameofhomeless);
         TextView age=(TextView)findViewById(R.id.ageofhomeless);
         TextView sex=(TextView)findViewById(R.id.sexofhomeless);
@@ -28,7 +31,8 @@ public class HomelessViewActivity extends AppCompatActivity {
 
         Homeless curr_homeless=Data_holder.Homeless_list.get(i);
         name.setText(curr_homeless.name+"");
-        age.setText(curr_homeless.age+"");
+        name.setTypeface(nunito_bold);
+        age.setText("Age: "+curr_homeless.age);
         sex.setText(curr_homeless.gender);
         other.setText(curr_homeless.other);
         StorageReference storage= FirebaseStorage.getInstance().getReference();

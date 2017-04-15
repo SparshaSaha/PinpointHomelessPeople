@@ -62,7 +62,9 @@
         <activity
             android:name=".ViewMap"
             android:label="@string/title_activity_view_map" />
-        <activity android:name=".HomelessViewActivity" />
+        <activity android:name=".HomelessViewActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            </activity>
         <activity
             android:name=".ViewMapFoodWastage"
             android:label="@string/title_activity_view_map_food_wastage" />

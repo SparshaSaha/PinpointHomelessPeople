@@ -45,18 +45,19 @@
             android:id="@+id/tv_upchPhoto"
             />
     </FrameLayout>
+
     <EditText
+        android:id="@+id/nameofhomeless"
         android:layout_width="match_parent"
-        android:inputType="textPersonName"
-        android:ems="10"
+        android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:id="@+id/nameofhomeless"
-        android:layout_height="50dp"
-        android:hint="Tentative Name"
         android:layout_marginBottom="10dp"
-        android:layout_toEndOf="@id/fl_uploadPhoto"/>
+        android:layout_marginTop="60dp"
+        android:layout_toEndOf="@id/fl_uploadPhoto"
+        android:ems="10"
+        android:hint="Tentative Name"
+        android:inputType="text|textPersonName" />
 
 
 
