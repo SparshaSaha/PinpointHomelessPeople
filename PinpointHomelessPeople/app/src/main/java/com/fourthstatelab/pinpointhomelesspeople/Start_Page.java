@@ -17,8 +17,11 @@ public class Start_Page extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start__page);
+
+        Utility.prepareFonts(getApplicationContext());
+        Utility.setStatusBar(getWindow(),getApplicationContext(),R.color.colorPrimaryDark);
         Handler splash_handler=new Handler();
-        splash_handler.postDelayed(SwitchActivity,2000);
+        splash_handler.postDelayed(SwitchActivity,10000);
 
 
     }
