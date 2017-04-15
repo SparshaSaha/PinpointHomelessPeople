@@ -336,8 +336,10 @@ public class NavigationCentre extends AppCompatActivity {
                         food_dist.phone_number=data.child("phone_number").getValue(String.class);
                         food_dist.loc_data=data.child("loc_data").getValue(Location_Data.class);
                         Data_holder.Food_distribution.add(food_dist);
-                        foodview.notify_myfunc(Data_holder.Food_distribution);
+
                     }
+                    Collections.reverse(Data_holder.Food_distribution);
+                    foodview.notify_myfunc(Data_holder.Food_distribution);
                 }
 
                 @Override
