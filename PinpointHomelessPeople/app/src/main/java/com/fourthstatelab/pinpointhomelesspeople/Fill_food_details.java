@@ -50,7 +50,7 @@ public class Fill_food_details extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) cb_veg.setChecked(false);
-                else if(!cb_nveg.isChecked()) cb_nveg.setChecked(true);
+                else if(!cb_veg.isChecked()) cb_nveg.setChecked(true);
             }
         });
 
@@ -58,7 +58,7 @@ public class Fill_food_details extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) cb_nveg.setChecked(false);
-                else if(!cb_veg.isChecked()) cb_veg.setChecked(true);
+                else if(!cb_nveg.isChecked()) cb_veg.setChecked(true);
             }
         });
 
