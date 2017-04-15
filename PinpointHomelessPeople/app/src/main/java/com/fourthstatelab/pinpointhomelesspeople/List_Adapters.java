@@ -1,6 +1,7 @@
 package com.fourthstatelab.pinpointhomelesspeople;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +60,7 @@ class Homeless_list extends BaseAdapter{
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         View myview = inflater.inflate(R.layout.card_homeless,null);
 
         Homeless homeless =  home_list.get(i);
@@ -102,6 +103,14 @@ class Homeless_list extends BaseAdapter{
         {
 
         }
+        homelessimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context,HomelessViewActivity.class);
+                intent.putExtra("index",i);
+                context.startActivity(intent);
+            }
+        });
 
 
         return myview;
