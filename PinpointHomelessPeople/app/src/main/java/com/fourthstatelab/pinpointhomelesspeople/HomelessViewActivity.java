@@ -14,6 +14,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import static com.fourthstatelab.pinpointhomelesspeople.Utility.nunito_bold;
+import static com.fourthstatelab.pinpointhomelesspeople.Utility.nunito_reg;
 
 public class HomelessViewActivity extends AppCompatActivity {
 
@@ -32,6 +33,9 @@ public class HomelessViewActivity extends AppCompatActivity {
         Homeless curr_homeless=Data_holder.Homeless_list.get(i);
         name.setText(curr_homeless.name+"");
         name.setTypeface(nunito_bold);
+        age.setTypeface(nunito_reg);
+        sex.setTypeface(nunito_reg);
+        other.setTypeface(nunito_reg);
         age.setText("Age: "+curr_homeless.age);
         sex.setText(curr_homeless.gender);
         other.setText(curr_homeless.other);
@@ -46,7 +50,5 @@ public class HomelessViewActivity extends AppCompatActivity {
         {
 
         }
-
-
     }
 }

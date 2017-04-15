@@ -31,10 +31,17 @@
         android:src="@drawable/ic_thumbs_up"
         android:background="@android:color/transparent"
         android:layout_below="@id/homeless_pic"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="5dp"
         android:id="@+id/homeless_thumbsUp"
         android:layout_marginStart="10dp"
         />
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="10sp"
+        android:layout_below="@id/homeless_thumbsUp"
+        android:layout_alignStart="@id/homeless_thumbsUp"
+        android:id="@+id/homeless_no_thumbsUp"/>
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,6 +53,13 @@
         android:layout_toEndOf="@id/homeless_thumbsUp"
         android:layout_marginStart="20dp"
          />
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="10sp"
+        android:layout_below="@id/homeless_thumbsDown"
+        android:layout_alignStart="@id/homeless_thumbsDown"
+        android:id="@+id/homeless_no_thumbsDown"/>
 
 
     <TextView
@@ -53,7 +67,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/homeless_age"
         android:layout_below="@id/homeless_thumbsUp"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="10dp"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:text="Age" />
@@ -64,7 +78,7 @@
         android:id="@+id/homeless_Gender"
         android:layout_below="@id/homeless_thumbsUp"
         android:layout_toEndOf="@id/homeless_age"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="10dp"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:text="Gender"
