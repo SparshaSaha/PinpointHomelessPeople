@@ -5,9 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by sparsha on 7/3/17.
@@ -46,6 +50,7 @@ class Homeless_list extends BaseAdapter{
     class Holder
     {
         TextView name,age,others;
+        ImageView homelessimage;
     }
 
     @Override
@@ -55,12 +60,11 @@ class Homeless_list extends BaseAdapter{
         holder.name=(TextView)myview.findViewById(R.id.nameofhomeless);
         holder.age=(TextView)myview.findViewById(R.id.myage);
         holder.others=(TextView)myview.findViewById(R.id.others);
+        holder.homelessimage=(ImageView)myview.findViewById(R.id.rowview_homeless_imgae);
 
         holder.name.setText(home_list.get(i).name);
         holder.age.setText(home_list.get(i).age+"");
         holder.others.setText(home_list.get(i).other);
-
-
 
         return myview;
     }
@@ -126,6 +130,8 @@ class Food_Distribution_list extends BaseAdapter
         holder.address.setText(foodlist.get(i).address);
         holder.phone.setText(foodlist.get(i).phone_number);
         holder.type.setText(foodlist.get(i).veg_nonveg+"");
+
+
 
         return myview;
     }
