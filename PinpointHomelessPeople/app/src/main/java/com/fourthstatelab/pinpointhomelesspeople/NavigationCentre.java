@@ -45,6 +45,8 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.fourthstatelab.pinpointhomelesspeople.Utility.fredoka;
+
 public class NavigationCentre extends AppCompatActivity {
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -63,7 +65,9 @@ public class NavigationCentre extends AppCompatActivity {
     public static Context con;
     static Activity activity;
     static int off=0;
-    ImageButton whatsappshare;
+
+    TextView appName;
+    FloatingActionButton fb_ViewMap;
 
 
     @Override
@@ -80,35 +84,27 @@ public class NavigationCentre extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        whatsappshare=(ImageButton)findViewById(R.id.whatsappshare);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-        whatsappshare.setOnClickListener(new View.OnClickListener() {
+        Utility.setStatusBar(getWindow(),con);
+        appName = (TextView)findViewById(R.id.Home_appName);
+        appName.setTypeface(fredoka);
+        fb_ViewMap =(FloatingActionButton)findViewById(R.id.viewMap);
+        fb_ViewMap.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                PackageManager pm=getPackageManager();
-                try {
-
-                    Intent waIntent = new Intent(Intent.ACTION_SEND);
-                    waIntent.setType("text/plain");
-                    String text = "https://play.google.com/store/apps/details?id=com.fourthstatelabs.zchedule&hl=en";
-
-                    PackageInfo info=pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
-                    //Check if package exists or not. If not then code
-                    //in catch block will be called
-                    waIntent.setPackage("com.whatsapp");
-
-                    waIntent.putExtra(Intent.EXTRA_TEXT, text);
-                    startActivity(Intent.createChooser(waIntent, "Share with"));
-
-                } catch (Exception e) {
-                    Toast.makeText(con, "WhatsApp not Installed", Toast.LENGTH_SHORT)
-                            .show();
+            public void onClick(View v) {
+                int selection=tabLayout.getSelectedTabPosition();
+                switch (selection){
+                    case 0:
+                        startActivity(new Intent(con,ViewMap.class));
+                        break;
+                    case 1:
+                        startActivity(new Intent(con,ViewMapFoodWastage.class));
+                        break;
                 }
-
             }
         });
+
         try {
             off = Settings.Secure.getInt(getContentResolver(), Settings.Secure.LOCATION_MODE);
         } catch (Settings.SettingNotFoundException e) {
@@ -141,6 +137,27 @@ public class NavigationCentre extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        else if(id==R.id.action_Share){
+            PackageManager pm=getPackageManager();
+            try {
+
+                Intent waIntent = new Intent(Intent.ACTION_SEND);
+                waIntent.setType("text/plain");
+                String text = "https://play.google.com/store/apps/details?id=com.fourthstatelabs.zchedule&hl=en";
+
+                PackageInfo info=pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+                //Check if package exists or not. If not then code
+                //in catch block will be called
+                waIntent.setPackage("com.whatsapp");
+
+                waIntent.putExtra(Intent.EXTRA_TEXT, text);
+                startActivity(Intent.createChooser(waIntent, "Share with"));
+
+            } catch (Exception e) {
+                Toast.makeText(con, "WhatsApp not Installed", Toast.LENGTH_SHORT)
+                        .show();
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -197,14 +214,7 @@ public class NavigationCentre extends AppCompatActivity {
                         }
                     });
 
-                    Button viewmap=(Button)rootView.findViewById(R.id.viewinmap);
-                    viewmap.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent in=new Intent(con,ViewMapFoodWastage.class);
-                            startActivity(in);
-                        }
-                    });
+
 
                     DatabaseReference dataref;
                     dataref = FirebaseDatabase.getInstance().getReference();
@@ -219,14 +229,6 @@ public class NavigationCentre extends AppCompatActivity {
                     ListView homelessView = (ListView) rootView.findViewById(R.id.listview);
                     FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
 
-                    Button viewinmap=(Button)rootView.findViewById(R.id.viewinmap);
-                    viewinmap.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent=new Intent(con,ViewMap.class);
-                            startActivity(intent);
-                        }
-                    });
                     fab.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
