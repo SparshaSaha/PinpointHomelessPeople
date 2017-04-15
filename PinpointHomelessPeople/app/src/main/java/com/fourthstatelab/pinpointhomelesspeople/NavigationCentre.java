@@ -33,7 +33,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListView;
+import com.fourthstatelab.pinpointhomelesspeople.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -207,11 +207,21 @@ public class NavigationCentre extends AppCompatActivity {
 
             switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
                 case 2:
-                    int firstVis = 0;
                     rootView = inflater.inflate(R.layout.fragment_navigation_centre, container, false);
                     final FloatingActionButton fabutton = (FloatingActionButton) rootView.findViewById(R.id.fab);
                     ListView food_donate_view = (ListView) rootView.findViewById(R.id.listview);
 
+                    food_donate_view.setOnDetectScrollListener(new OnDetectScrollListener() {
+                        @Override
+                        public void onUpScrolling() {
+                            fabutton.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onDownScrolling() {
+                            fabutton.setVisibility(View.GONE);
+                        }
+                    });
 
                     fabutton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -236,8 +246,19 @@ public class NavigationCentre extends AppCompatActivity {
                 case 1:
                     rootView = inflater.inflate(R.layout.fragment_navigation_centre, container, false);
                     ListView homelessView = (ListView) rootView.findViewById(R.id.listview);
-                    FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+                    final FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+                    homelessView.setOnDetectScrollListener(new OnDetectScrollListener() {
+                        @Override
+                        public void onUpScrolling() {
 
+                            fab.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onDownScrolling() {
+                            fab.setVisibility(View.GONE);
+                        }
+                    });
                     fab.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
