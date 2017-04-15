@@ -83,7 +83,7 @@ public class NavigationCentre extends AppCompatActivity {
         whatsappshare=(ImageButton)findViewById(R.id.whatsappshare);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-        off = 0;
+
         whatsappshare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

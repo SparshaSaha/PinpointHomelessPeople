@@ -17,20 +17,20 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class ViewMap extends FragmentActivity implements OnMapReadyCallback {
+public class ViewMapFoodWastage extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    public static Context con;
+    public Context con;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_map);
+        setContentView(R.layout.activity_view_map_food_wastage);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        con=this;
+        con = this;
     }
 
 
@@ -61,20 +61,21 @@ public class ViewMap extends FragmentActivity implements OnMapReadyCallback {
         Location loc = locmanager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
         LatLng latlng = new LatLng(loc.getLatitude(), loc.getLongitude());
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
-        for(int i=0;i<Data_holder.Homeless_list.size();i++)
+
+        for(int i=0;i<Data_holder.Food_distribution.size();i++)
         {
-            LatLng latlong=new LatLng(Data_holder.Homeless_list.get(i).loc_data.latitude,Data_holder.Homeless_list.get(i).loc_data.longitude);
-            Marker mymarker=mMap.addMarker(new MarkerOptions().position(latlong).title(Data_holder.Homeless_list.get(i).name));
+            LatLng latilong=new LatLng(Data_holder.Food_distribution.get(i).loc_data.latitude,Data_holder.Food_distribution.get(i).loc_data.longitude);
+            Marker mymarker=mMap.addMarker(new MarkerOptions().position(latilong).title(Data_holder.Food_distribution.get(i).name_of_provider));
             mymarker.setTag(i);
+
         }
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                int i= (int) marker.getTag();
-                Intent intent=new Intent(ViewMap.this,HomelessViewActivity.class);
+                int i=(int)marker.getTag();
+                Intent intent=new Intent(ViewMapFoodWastage.this,FoodWastageViewActivity.class);
                 intent.putExtra("index",i);
                 startActivity(intent);
-
                 return false;
             }
         });

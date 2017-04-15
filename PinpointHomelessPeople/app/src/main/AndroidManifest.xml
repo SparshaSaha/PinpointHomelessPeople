@@ -34,7 +34,6 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
         <activity android:name=".Signup" />
-
         <activity
             android:name=".NavigationCentre"
             android:label="@string/title_activity_navigation_centre"
@@ -59,9 +58,11 @@
         <activity
             android:name=".ViewMap"
             android:label="@string/title_activity_view_map" />
-        <activity android:name=".HomelessViewActivity"
-
-            ></activity>
+        <activity android:name=".HomelessViewActivity" />
+        <activity
+            android:name=".ViewMapFoodWastage"
+            android:label="@string/title_activity_view_map_food_wastage" />
+        <activity android:name=".FoodWastageViewActivity"></activity>
     </application>
 
 </manifest>
