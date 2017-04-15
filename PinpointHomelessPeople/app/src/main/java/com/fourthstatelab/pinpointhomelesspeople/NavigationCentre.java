@@ -197,6 +197,15 @@ public class NavigationCentre extends AppCompatActivity {
                         }
                     });
 
+                    Button viewmap=(Button)rootView.findViewById(R.id.viewinmap);
+                    viewmap.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent in=new Intent(con,ViewMapFoodWastage.class);
+                            startActivity(in);
+                        }
+                    });
+
                     DatabaseReference dataref;
                     dataref = FirebaseDatabase.getInstance().getReference();
                     Food_Distribution_list food_dist_list = new Food_Distribution_list(Data_holder.Food_distribution, con);

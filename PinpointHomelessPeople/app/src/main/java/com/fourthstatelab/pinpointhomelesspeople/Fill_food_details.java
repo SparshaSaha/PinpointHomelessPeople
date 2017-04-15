@@ -10,12 +10,15 @@ import android.widget.EditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class Fill_food_details extends AppCompatActivity {
     EditText name,address,quantity,type,phonenumber;
     Button okay;
     DatabaseReference database;
     FirebaseAuth firebaseAuth;
+    Intent prev_intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +26,11 @@ public class Fill_food_details extends AppCompatActivity {
 
         database= FirebaseDatabase.getInstance().getReference();
         firebaseAuth=FirebaseAuth.getInstance();
+
+        prev_intent=getIntent();
+        String z=prev_intent.getStringExtra("lat_lon_jason");
+
+        final Location_Data locdata=new Gson().fromJson(z,new TypeToken<Location_Data>(){}.getType());
 
         name=(EditText)findViewById(R.id.nameoforg);
         address=(EditText)findViewById(R.id.address);
@@ -43,6 +51,8 @@ public class Fill_food_details extends AppCompatActivity {
                     food_details.veg_nonveg=0;
                 else
                     food_details.veg_nonveg=1;
+
+                food_details.loc_data=locdata;
 
                 upload_details_to_firebase(food_details);
             }

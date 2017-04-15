@@ -139,7 +139,7 @@ public class My_Map extends FragmentActivity implements OnMapReadyCallback {
                     }
                     Location loc = locmanager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
                     LatLng latlng=new LatLng(loc.getLatitude(),loc.getLongitude());
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng,15));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng,18));
 
 
                 } else {
@@ -177,6 +177,7 @@ public class My_Map extends FragmentActivity implements OnMapReadyCallback {
                     intent=new Intent(My_Map.this,Fill_homeless_details.class);
                 else
                     intent=new Intent(My_Map.this,Fill_food_details.class);
+
                 intent.putExtra("lat_lon_jason",loc);
                 startActivity(intent);
                 finish();

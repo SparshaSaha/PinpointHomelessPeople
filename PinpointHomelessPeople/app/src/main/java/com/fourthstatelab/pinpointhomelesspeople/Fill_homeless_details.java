@@ -35,7 +35,6 @@ Intent prev_intent;
 
         prev_intent=getIntent();
         final String z=prev_intent.getStringExtra("lat_lon_jason");
-        Toast.makeText(this, z, Toast.LENGTH_LONG).show();
 
         done.setOnClickListener(new View.OnClickListener() {
             @Override
