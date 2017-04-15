@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp"
+    android:background="@drawable/card_round_corner">
+
+    <ImageView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:background="@drawable/img_round_corner"
+        android:src="@drawable/whatsappimage"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/homeless_pic"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/homeless_name"
+        android:layout_below="@id/homeless_pic"
+        android:layout_marginTop="7dp"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:text="Name"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/homeless_age"
+        android:layout_below="@id/homeless_name"
+        android:layout_marginTop="7dp"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:text="Age"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/homeless_Gender"
+        android:layout_below="@id/homeless_name"
+        android:layout_toEndOf="@id/homeless_age"
+        android:layout_marginTop="7dp"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:text="Gender"
+        android:layout_marginStart="60dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/homeless_desc"
+        android:layout_below="@id/homeless_age"
+        android:layout_marginTop="7dp"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:text="Description"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/homeless_taggedBy"
+        android:textColor="@android:color/darker_gray"
+        android:text="Tagged By"
+        android:layout_below="@id/homeless_desc"
+        android:layout_marginTop="7dp"/>
+
+
+
+
+</RelativeLayout>

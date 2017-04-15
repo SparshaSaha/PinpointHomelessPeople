@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import static com.fourthstatelab.pinpointhomelesspeople.Utility.nunito_bold;
+import static com.fourthstatelab.pinpointhomelesspeople.Utility.nunito_reg;
+
 /**
  * Created by sparsha on 7/3/17.
  */
@@ -50,17 +53,33 @@ class Homeless_list extends BaseAdapter{
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        View myview = inflater.inflate(R.layout.homeless_listview,null);
-        Holder holder=new Holder();
-        holder.name=(TextView)myview.findViewById(R.id.nameofhomeless);
-        holder.age=(TextView)myview.findViewById(R.id.myage);
-        holder.others=(TextView)myview.findViewById(R.id.others);
+        View myview = inflater.inflate(R.layout.card_homeless,null);
 
-        holder.name.setText(home_list.get(i).name);
-        holder.age.setText(home_list.get(i).age+"");
-        holder.others.setText(home_list.get(i).other);
+        Homeless homeless =  home_list.get(i);
+
+        TextView nameView =(TextView)myview.findViewById(R.id.homeless_name);
+        nameView.setText(homeless.name);
+        nameView.setTypeface(nunito_bold);
 
 
+        TextView ageView =(TextView)myview.findViewById(R.id.homeless_age);
+        ageView.setText("Age: "+homeless.age);
+        ageView.setTypeface(nunito_reg);
+
+
+        TextView genderView = (TextView)myview.findViewById(R.id.homeless_Gender);
+        genderView.setText(homeless.gender);
+        genderView.setTypeface(nunito_reg);
+
+
+        TextView descView = (TextView)myview.findViewById(R.id.homeless_desc);
+        descView.setText(homeless.other);
+        descView.setTypeface(nunito_reg);
+
+
+        TextView taggedView =(TextView)myview.findViewById(R.id.homeless_taggedBy);
+        taggedView.setText("Tagged By: "+homeless.tagged_by);
+        taggedView.setTypeface(nunito_reg);
 
         return myview;
     }
