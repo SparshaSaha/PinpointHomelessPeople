@@ -1,6 +1,7 @@
 package com.fourthstatelab.pinpointhomelesspeople;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -153,44 +154,35 @@ public class My_Map extends FragmentActivity implements OnMapReadyCallback {
 
     public void AlertDialog_to_proceed(final LatLng latLng)
     {
-        AlertDialog.Builder alertdialogbuilder=new AlertDialog.Builder(this);
-        LayoutInflater layoutInflater= this.getLayoutInflater();
-        android.view.View alertview=layoutInflater.inflate(R.layout.alert_dialog_layout,null);
-        alertdialogbuilder.setView(alertview);
-        Button yes,no;
-        yes=(Button)alertview.findViewById(R.id.yes);
-        no=(Button)alertview.findViewById(R.id.no);
-        final AlertDialog alert=alertdialogbuilder.create();
-        alert.show();
-
-        yes.setOnClickListener(new android.view.View.OnClickListener() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(android.view.View view) {
-                alert.cancel();
-                Location_Data locdata=new Location_Data();
-                locdata.latitude=latLng.latitude;
-                locdata.longitude=latLng.longitude;
-                Gson jason=new Gson();
-                String loc=jason.toJson(locdata);
-                Intent intent;
-                if(in.getStringExtra("type").equals("homeless"))
-                    intent=new Intent(My_Map.this,Fill_homeless_details.class);
-                else
-                    intent=new Intent(My_Map.this,Fill_food_details.class);
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        //Yes button clicked
+                        Location_Data locdata=new Location_Data();
+                        locdata.latitude=latLng.latitude;
+                        locdata.longitude=latLng.longitude;
+                        Gson jason=new Gson();
+                        String loc=jason.toJson(locdata);
+                        Intent intent;
+                        if(in.getStringExtra("type").equals("homeless"))
+                            intent=new Intent(My_Map.this,Fill_homeless_details.class);
+                        else
+                            intent=new Intent(My_Map.this,Fill_food_details.class);
 
-                intent.putExtra("lat_lon_jason",loc);
-                startActivity(intent);
-                finish();
-
+                        intent.putExtra("lat_lon_jason",loc);
+                        startActivity(intent);
+                        finish();
+                        break;
+                }
             }
-        });
-
-        no.setOnClickListener(new android.view.View.OnClickListener() {
-            @Override
-            public void onClick(android.view.View view) {
-                alert.cancel();
-            }
-        });
+        };
+        builder.setMessage("Confirm to tag.").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override
