@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,6 +41,9 @@ Intent prev_intent;
     FloatingActionButton image;
 
     ImageView imageView;
+    Bitmap global;
+    String k;
+    String z;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +63,7 @@ Intent prev_intent;
         imageView.setVisibility(View.INVISIBLE);
 
         prev_intent=getIntent();
-        final String z=prev_intent.getStringExtra("lat_lon_jason");
+        z=prev_intent.getStringExtra("lat_lon_jason");
 
         image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,28 +76,9 @@ Intent prev_intent;
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Homeless current_homeless=new Homeless();
-                current_homeless.name=name.getText().toString();
-                current_homeless.gender=gender.getText().toString();
-                current_homeless.age=Integer.parseInt(age.getText().toString());
-                current_homeless.other=other.getText().toString();
-                current_homeless.tagged_by=firebaseAuth.getCurrentUser().getEmail();
-                current_homeless.downvotes=0;
-                current_homeless.upvotes=0;
-                current_homeless.pic_data_url="nil";
-                Location_Data locdata=new Gson().fromJson(z,new TypeToken<Location_Data>(){}.getType());
-                current_homeless.loc_data=locdata;
+                uploadimage(global);
 
-                try {
-                    database.child("Homeless").child(System.currentTimeMillis() + "").setValue(current_homeless);
-                }
-                catch(Exception e)
-                {
 
-                }
-                Intent intent=new Intent(Fill_homeless_details.this,NavigationCentre.class);
-                startActivity(intent);
-                finish();
             }
         });
     }
@@ -102,6 +87,7 @@ Intent prev_intent;
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1067 && resultCode == Activity.RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
+            global=photo;
             imageView.setVisibility(View.VISIBLE);
             imageView.setImageBitmap(photo);
         }
@@ -112,7 +98,7 @@ Intent prev_intent;
     {
         FirebaseStorage firebasestorage=FirebaseStorage.getInstance();
         StorageReference storageref=firebasestorage.getReferenceFromUrl("gs://pinpointhomelesspeople.appspot.com/");
-        StorageReference mountainImagesRef = storageref.child("images/" + System.currentTimeMillis()+ ".jpg");
+        StorageReference mountainImagesRef = storageref.child("images/" + name.getText().toString()+ ".jpg");
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
         byte[] data = baos.toByteArray();
@@ -126,7 +112,32 @@ Intent prev_intent;
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                //Uri downloadUrl =taskSnapshot.getDownloadUrl();
+                k =taskSnapshot.getDownloadUrl().toString();
+                Homeless current_homeless=new Homeless();
+                current_homeless.name=name.getText().toString();
+                current_homeless.gender=gender.getText().toString();
+                current_homeless.age=Integer.parseInt(age.getText().toString());
+                current_homeless.other=other.getText().toString();
+                current_homeless.tagged_by=firebaseAuth.getCurrentUser().getEmail();
+                current_homeless.downvotes=0;
+                current_homeless.upvotes=0;
+                current_homeless.pic_data_url=k;
+                Location_Data locdata=new Gson().fromJson(z,new TypeToken<Location_Data>(){}.getType());
+                current_homeless.loc_data=locdata;
+
+
+                try {
+                    database.child("Homeless").child(System.currentTimeMillis() + "").setValue(current_homeless);
+                }
+                catch(Exception e)
+                {
+
+                }
+
+                Intent intent=new Intent(Fill_homeless_details.this,NavigationCentre.class);
+                startActivity(intent);
+                finish();
+
             }
         });
 
