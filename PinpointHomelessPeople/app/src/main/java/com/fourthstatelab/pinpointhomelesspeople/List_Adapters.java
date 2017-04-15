@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -58,7 +61,7 @@ class Homeless_list extends BaseAdapter{
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        View myview = inflater.inflate(R.layout.homeless_listview,null);
+        View myview = inflater.inflate(R.layout.card_homeless,null);
 
         Homeless homeless =  home_list.get(i);
 
@@ -86,6 +89,15 @@ class Homeless_list extends BaseAdapter{
         TextView taggedView =(TextView)myview.findViewById(R.id.homeless_taggedBy);
         taggedView.setText("Tagged By: "+homeless.tagged_by);
         taggedView.setTypeface(nunito_reg);
+
+
+
+        StorageReference storage= FirebaseStorage.getInstance().getReference();
+        StorageReference s1=storage.child("images/"+nameView.getText().toString()+".jpg");
+        ImageView homelessimage=(ImageView)myview.findViewById(R.id.homeless_pic);
+
+        Glide.with(context).using(new FirebaseImageLoader()).load(s1).into(homelessimage);
+
 
         return myview;
     }
