@@ -43,6 +43,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.fourthstatelab.pinpointhomelesspeople.Utility.fredoka;
@@ -298,11 +299,14 @@ public class NavigationCentre extends AppCompatActivity {
                             homeless.gender = data.child("gender").getValue(String.class);
                             homeless.loc_data = data.child("loc_data").getValue(Location_Data.class);
                             Data_holder.Homeless_list.add(homeless);
-                            homelessView.notify(Data_holder.Homeless_list);
+
                         }
 
 
                     }
+                    Collections.reverse(Data_holder.Homeless_list);
+                    homelessView.notify(Data_holder.Homeless_list);
+
                 }
 
                 @Override
