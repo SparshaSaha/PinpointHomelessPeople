@@ -95,8 +95,14 @@ class Homeless_list extends BaseAdapter{
         StorageReference storage= FirebaseStorage.getInstance().getReference();
         StorageReference s1=storage.child("images/"+nameView.getText().toString()+".jpg");
         ImageView homelessimage=(ImageView)myview.findViewById(R.id.homeless_pic);
+        if(homeless.pic_data_url==null || homeless.pic_data_url.equals("nil")==false) {
 
-        Glide.with(context).using(new FirebaseImageLoader()).load(s1).into(homelessimage);
+            Glide.with(context).using(new FirebaseImageLoader()).load(s1).into(homelessimage);
+        }
+        else
+        {
+
+        }
 
 
         return myview;

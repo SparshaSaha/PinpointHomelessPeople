@@ -46,6 +46,7 @@ Intent prev_intent;
     FirebaseAuth firebaseAuth;
     EditText name,age,other;
     Button done;
+    boolean flag;
     FrameLayout image;
 
     CheckBox cb_Male, cb_Female;
@@ -64,6 +65,7 @@ Intent prev_intent;
         database=FirebaseDatabase.getInstance().getReference();
         firebaseAuth=FirebaseAuth.getInstance();
 
+        flag=false;
         name=(EditText)findViewById(R.id.nameofhomeless);
         cb_Male=(CheckBox)findViewById(R.id.cbMale);
         cb_Female=(CheckBox)findViewById(R.id.cbFeMale);
@@ -83,6 +85,7 @@ Intent prev_intent;
             public void onClick(View view) {
                 Intent cameraIntent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, 1067);
+                flag=true;
             }
         });
 
@@ -126,6 +129,7 @@ Intent prev_intent;
 
     private void uploadimage(Bitmap bitmap)
     {
+        if(flag==true){
         FirebaseStorage firebasestorage=FirebaseStorage.getInstance();
         StorageReference storageref=firebasestorage.getReferenceFromUrl("gs://pinpointhomelesspeople.appspot.com/");
         StorageReference mountainImagesRef = storageref.child("images/" + name.getText().toString()+ ".jpg");
@@ -151,7 +155,7 @@ Intent prev_intent;
                 current_homeless.tagged_by=firebaseAuth.getCurrentUser().getEmail();
                 current_homeless.downvotes=0;
                 current_homeless.upvotes=0;
-                current_homeless.pic_data_url=k;
+                current_homeless.pic_data_url="imagepresent";
                 Location_Data locdata=new Gson().fromJson(z,new TypeToken<Location_Data>(){}.getType());
                 current_homeless.loc_data=locdata;
 
@@ -163,13 +167,43 @@ Intent prev_intent;
                 {
 
                 }
+                flag=false;
 
                 Intent intent=new Intent(Fill_homeless_details.this,NavigationCentre.class);
                 startActivity(intent);
                 finish();
 
             }
-        });
+        });}
+
+        else
+        {
+            Homeless current_homeless=new Homeless();
+            current_homeless.name=name.getText().toString();
+            current_homeless.gender=getGender();
+            current_homeless.age=Integer.parseInt(age.getText().toString());
+            current_homeless.other=other.getText().toString();
+            current_homeless.tagged_by=firebaseAuth.getCurrentUser().getEmail();
+            current_homeless.downvotes=0;
+            current_homeless.upvotes=0;
+            current_homeless.pic_data_url="nil";
+            Location_Data locdata=new Gson().fromJson(z,new TypeToken<Location_Data>(){}.getType());
+            current_homeless.loc_data=locdata;
+
+
+            try {
+                database.child("Homeless").child(System.currentTimeMillis() + "").setValue(current_homeless);
+            }
+            catch(Exception e)
+            {
+
+            }
+
+            Intent intent=new Intent(Fill_homeless_details.this,NavigationCentre.class);
+            startActivity(intent);
+            finish();
+
+        }
 
     }
 
