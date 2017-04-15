@@ -11,6 +11,40 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.fourthstatelab.pinpointhomelesspeople.Fill_homeless_details">
 
+    <TextView
+        android:text="Help us by giving a few details about the person:-"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textView"
+        android:textSize="18sp"
+        android:textStyle="normal|bold" />
+    <FrameLayout
+        android:layout_height="100dp"
+        android:layout_width="100dp"
+        android:id="@+id/fl_uploadPhoto"
+        android:layout_below="@id/textView"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:background="@android:color/darker_gray"
+            android:src="@drawable/ic_add_person"
+            android:id="@+id/imageView" />
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Upload Photo"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            android:textAlignment="center"
+            android:layout_gravity="bottom"
+            android:background="@color/opac_transparent"
+            android:id="@+id/tv_upchPhoto"
+            />
+    </FrameLayout>
     <EditText
         android:layout_width="match_parent"
         android:inputType="textPersonName"
@@ -21,17 +55,9 @@
         android:id="@+id/nameofhomeless"
         android:layout_height="50dp"
         android:hint="Tentative Name"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginBottom="10dp"
+        android:layout_toEndOf="@id/fl_uploadPhoto"/>
 
-    <TextView
-        android:text="Help us by giving a few details about the person:-"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/textView"
-        android:textSize="18sp"
-        android:textStyle="normal|bold" />
 
 
     <CheckBox
@@ -40,14 +66,14 @@
         android:text="Male"
         android:id="@+id/cbMale"
         android:layout_below="@+id/nameofhomeless"
-        android:layout_alignStart="@id/textView"
-        android:layout_marginStart="40dp"
+        android:layout_alignStart="@id/nameofhomeless"
+        android:layout_marginStart="20dp"
         android:checked="true"/>
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="FeMale"
+        android:text="Female"
         android:id="@+id/cbFeMale"
         android:layout_below="@+id/nameofhomeless"
         android:layout_alignEnd="@id/nameofhomeless"
@@ -60,7 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:ems="10"
-        android:layout_below="@+id/cbMale"
+        android:layout_below="@+id/fl_uploadPhoto"
         android:id="@+id/ageofhomeless"
         android:hint="Approximate Age"
         android:layout_marginBottom="10dp"
@@ -77,24 +103,9 @@
         android:layout_marginBottom="10dp"
         android:hint="Other Details" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:clickable="true"
-        app:fabSize="mini"
-        app:srcCompat="@drawable/ic_menu_camera"
-        android:layout_below="@+id/other"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="22dp"
-        android:layout_marginTop="30dp"
-        android:id="@+id/imagecapture"
-        app:backgroundTint="#e06513"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imagecapture"
-        android:layout_toStartOf="@+id/imagecapture"
         android:layout_marginEnd="18dp"
         android:id="@+id/photo" />
 
@@ -102,16 +113,9 @@
         android:id="@+id/done"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/other"
         android:layout_alignParentEnd="true"
-        android:text="Done" />
+        android:text="Done"
+        android:layout_marginTop="20dp"/>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@+id/other"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
-        app:srcCompat="@drawable/common_full_open_on_phone" />
 </RelativeLayout>

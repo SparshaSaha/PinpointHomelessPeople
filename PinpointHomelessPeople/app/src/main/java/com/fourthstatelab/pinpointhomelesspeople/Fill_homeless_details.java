@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -16,7 +17,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -34,6 +37,8 @@ import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
 
 import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
+import static com.fourthstatelab.pinpointhomelesspeople.Utility.nunito_bold;
+import static com.fourthstatelab.pinpointhomelesspeople.Utility.nunito_reg;
 
 public class Fill_homeless_details extends AppCompatActivity {
 Intent prev_intent;
@@ -41,9 +46,11 @@ Intent prev_intent;
     FirebaseAuth firebaseAuth;
     EditText name,age,other;
     Button done;
-    FloatingActionButton image;
+    FrameLayout image;
 
     CheckBox cb_Male, cb_Female;
+
+    TextView upchPhoto;
 
     ImageView imageView;
     Bitmap global;
@@ -63,10 +70,10 @@ Intent prev_intent;
         age=(EditText)findViewById(R.id.ageofhomeless);
         other=(EditText)findViewById(R.id.other);
         done=(Button)findViewById(R.id.done);
+        done.setTypeface(nunito_bold);
 
-        image=(FloatingActionButton)findViewById(R.id.imagecapture);
+        image=(FrameLayout) findViewById(R.id.fl_uploadPhoto);
         imageView=(ImageView)findViewById(R.id.imageView);
-        imageView.setVisibility(View.INVISIBLE);
 
         prev_intent=getIntent();
         z=prev_intent.getStringExtra("lat_lon_jason");
@@ -83,8 +90,6 @@ Intent prev_intent;
             @Override
             public void onClick(View view) {
                 uploadimage(global);
-
-
             }
         });
 
@@ -103,6 +108,8 @@ Intent prev_intent;
                 else if(!cb_Female.isChecked()) cb_Male.setChecked(true);
             }
         });
+        upchPhoto=(TextView)findViewById(R.id.tv_upchPhoto);
+        upchPhoto.setTypeface(nunito_reg);
     }
 
     @Override
@@ -110,8 +117,9 @@ Intent prev_intent;
         if (requestCode == 1067 && resultCode == Activity.RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             global=photo;
-            imageView.setVisibility(View.VISIBLE);
             imageView.setImageBitmap(photo);
+            upchPhoto.setText("Change Photo");
+            imageView.setBackgroundColor(Color.TRANSPARENT);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
