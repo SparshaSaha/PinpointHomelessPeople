@@ -7,7 +7,7 @@
     <SurfaceView
         android:layout_height="200dp"
         android:layout_width="match_parent"
-        android:id="@+id/sv_signUp"
+        android:id="@+id/sv_showHomeLess"
         android:background="@color/colorPrimaryDark"/>
 
     <ImageView
@@ -64,4 +64,12 @@
         android:textSize="17sp"
         android:text="TextView"
         android:layout_alignStart="@id/nameofhomeless"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/sv_showHomeLess">
+        <include layout="@layout/activity_my__map"/>
+        </RelativeLayout>
+
+
 </RelativeLayout>
