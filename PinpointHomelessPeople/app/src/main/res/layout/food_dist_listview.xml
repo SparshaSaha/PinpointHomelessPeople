@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/card_round_corner"
+    android:padding="16dp">
 
     <TextView
         android:text="TextView"
@@ -8,40 +11,46 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/nameofhomeless" />
+        android:id="@+id/nameofhomeless"
+        android:textColor="@android:color/black"
+        android:textSize="25sp"/>
+
 
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/nameofhomeless"
-        android:layout_alignEnd="@+id/nameofhomeless"
-        android:layout_marginTop="15dp"
-        android:id="@+id/address" />
-
+       android:layout_below="@id/nameofhomeless"
+        android:layout_marginTop="10dp"
+        android:id="@+id/ph_no"
+        android:textColor="@android:color/black"/>
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/ph_no"
+        android:layout_marginTop="10dp"
+        android:id="@+id/address"
+        android:textColor="@android:color/black"/>
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mytype"
         android:layout_alignParentEnd="true"
-        android:id="@+id/ph_no" />
+        android:layout_centerVertical="true"
+        android:textColor="@android:color/black" />
 
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/address"
-        android:layout_alignStart="@+id/ph_no"
-        android:id="@+id/quantity" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="35dp"
+        android:layout_below="@id/mytype"
+        android:id="@+id/quantity"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"/>
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/address"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="14dp"
-        android:id="@+id/mytype" />
 
 </RelativeLayout>

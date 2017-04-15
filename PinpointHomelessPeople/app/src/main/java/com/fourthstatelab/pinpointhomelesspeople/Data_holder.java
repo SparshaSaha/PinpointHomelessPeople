@@ -40,7 +40,7 @@ class Homeless
 class FoodDistribution
 {
     public String name_of_provider;
-    public double quantity;
+    public int quantity;
     public String phone_number;
     public String address;
     public int veg_nonveg;
