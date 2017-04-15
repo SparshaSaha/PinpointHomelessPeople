@@ -66,8 +66,8 @@ public class Fill_food_details extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 FoodDistribution food_details=new FoodDistribution();
-                food_details.address=address.getText().toString();
-                food_details.name_of_provider=name.getText().toString();
+                food_details.address=capitalize(address.getText().toString());
+                food_details.name_of_provider=capitalize(name.getText().toString());
                 food_details.phone_number=phonenumber.getText().toString();
                 food_details.quantity=Integer.parseInt(quantity.getText().toString());
 
@@ -96,5 +96,16 @@ public class Fill_food_details extends AppCompatActivity {
 
     int getFoodType(){
         return cb_veg.isChecked() ? 0 : 1;
+    }
+
+    public String capitalize(String s)
+    {
+        char first=s.charAt(0);
+        if((int)first>=97)
+        {
+            s=(char)(s.charAt(0)-32)+s.substring(1);
+        }
+        return s;
+
     }
 }

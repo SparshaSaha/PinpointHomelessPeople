@@ -42,15 +42,15 @@
         android:layout_marginTop="13dp" />
 
     <EditText
+        android:id="@+id/quantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/quantity"
-        android:hint="Quantity of food"
-        android:layout_below="@+id/nameoforg"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="13dp" />
+        android:layout_below="@+id/nameoforg"
+        android:layout_marginTop="13dp"
+        android:ems="10"
+        android:hint="Number of serves"
+        android:inputType="number" />
 
     <EditText
         android:layout_width="match_parent"
