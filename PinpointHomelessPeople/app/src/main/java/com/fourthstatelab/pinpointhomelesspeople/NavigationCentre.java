@@ -251,8 +251,6 @@ public class NavigationCentre extends AppCompatActivity {
                     get_homeless_list(data_ref, home_list);
                     break;
 
-                case 3:
-                    rootView=inflater.inflate(R.layout.fragment_navigation_centre,container,false);
 
             }
 
@@ -272,55 +270,63 @@ public class NavigationCentre extends AppCompatActivity {
                 // for ActivityCompat#requestPermissions for more details.
                 return;
             }
-            myloc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            try {
+                off = Settings.Secure.getInt(con.getContentResolver(), Settings.Secure.LOCATION_MODE);
+            } catch (Settings.SettingNotFoundException e) {
+                e.printStackTrace();
+            }
+            if(off!=0) {
+                myloc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
 
+                data_ref.child("Homeless").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        Data_holder.Homeless_list = new ArrayList<Homeless>();
+                        homelessView.notify(Data_holder.Homeless_list);
+
+                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+                            Location_Data location_data = new Location_Data();
+                            location_data = data.child("loc_data").getValue(Location_Data.class);
+                            Location homeless_loc = new Location("homeless_loc");
+                            homeless_loc.setLatitude(location_data.latitude);
+                            homeless_loc.setLongitude(location_data.longitude);
+
+                            float distance = homeless_loc.distanceTo(myloc) / 1000;
+                            if (distance < 10.0) {
 
 
-            data_ref.child("Homeless").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+                                Homeless homeless = new Homeless();
+                                homeless.name = data.child("name").getValue(String.class);
+                                homeless.downvotes = data.child("downvotes").getValue(Integer.class);
+                                homeless.upvotes = data.child("upvotes").getValue(Integer.class);
+                                homeless.age = data.child("age").getValue(Integer.class);
+                                homeless.tagged_by = data.child("tagged_by").getValue(String.class);
+                                homeless.other = data.child("other").getValue(String.class);
+                                homeless.gender = data.child("gender").getValue(String.class);
+                                homeless.loc_data = data.child("loc_data").getValue(Location_Data.class);
+                                Data_holder.Homeless_list.add(homeless);
 
-                    Data_holder.Homeless_list=new ArrayList<Homeless>();
-                    homelessView.notify(Data_holder.Homeless_list);
+                            }
 
-                    for(DataSnapshot data:dataSnapshot.getChildren())
-                    {
-                        Location_Data location_data=new Location_Data();
-                        location_data=data.child("loc_data").getValue(Location_Data.class);
-                        Location homeless_loc=new Location("homeless_loc");
-                        homeless_loc.setLatitude(location_data.latitude);
-                        homeless_loc.setLongitude(location_data.longitude);
-
-                        float distance=homeless_loc.distanceTo(myloc)/1000;
-                        if(distance<10.0) {
-
-
-                            Homeless homeless = new Homeless();
-                            homeless.name = data.child("name").getValue(String.class);
-                            homeless.downvotes = data.child("downvotes").getValue(Integer.class);
-                            homeless.upvotes = data.child("upvotes").getValue(Integer.class);
-                            homeless.age = data.child("age").getValue(Integer.class);
-                            homeless.tagged_by = data.child("tagged_by").getValue(String.class);
-                            homeless.other = data.child("other").getValue(String.class);
-                            homeless.gender = data.child("gender").getValue(String.class);
-                            homeless.loc_data = data.child("loc_data").getValue(Location_Data.class);
-                            Data_holder.Homeless_list.add(homeless);
 
                         }
-
+                        Collections.reverse(Data_holder.Homeless_list);
+                        homelessView.notify(Data_holder.Homeless_list);
 
                     }
-                    Collections.reverse(Data_holder.Homeless_list);
-                    homelessView.notify(Data_holder.Homeless_list);
 
-                }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
+                    }
+                });
+            }
+            else
+            {
+                Toast.makeText(con, "Please turn on Location", Toast.LENGTH_SHORT).show();
+            }
         }
 
 
@@ -379,7 +385,7 @@ public class NavigationCentre extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
@@ -389,8 +395,7 @@ public class NavigationCentre extends AppCompatActivity {
                     return "Homeless";
                 case 1:
                     return "Food Wastage";
-                case 2:
-                    return "My Contributions";
+
             }
             return null;
         }
