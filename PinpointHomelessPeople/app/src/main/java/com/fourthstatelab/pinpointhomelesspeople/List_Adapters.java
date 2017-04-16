@@ -199,7 +199,7 @@ class Food_Distribution_list extends BaseAdapter
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
        View myview= layoutInflater.inflate(R.layout.food_dist_listview,null);
         Holder holder=new Holder();
         holder.name= (TextView) myview.findViewById(R.id.nameofhomeless);
@@ -219,6 +219,15 @@ class Food_Distribution_list extends BaseAdapter
         holder.address.setText(foodlist.get(i).address);
         holder.phone.setText("Ph: "+foodlist.get(i).phone_number);
         holder.type.setText(getFoodType(foodlist.get(i).veg_nonveg));
+
+        myview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context,FoodWastageViewActivity.class);
+                intent.putExtra("index",i);
+                context.startActivity(intent);
+            }
+        });
 
         return myview;
     }
