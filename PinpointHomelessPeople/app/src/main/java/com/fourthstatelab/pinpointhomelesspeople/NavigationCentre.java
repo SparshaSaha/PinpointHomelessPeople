@@ -439,7 +439,7 @@ public class NavigationCentre extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
+            // Show 2 total pages.
             return 2;
         }
 
@@ -447,9 +447,9 @@ public class NavigationCentre extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Homeless";
+                    return "Help Me";
                 case 1:
-                    return "Food Wastage";
+                    return "Feed Me";
 
             }
             return null;
