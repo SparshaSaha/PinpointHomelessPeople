@@ -223,7 +223,7 @@ class Food_Distribution_list extends BaseAdapter
         myview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context,FoodWastageViewActivity.class);
+                Intent intent=new Intent(context,FoodWastageViewActivity.class );
                 intent.putExtra("index",i);
                 context.startActivity(intent);
             }
